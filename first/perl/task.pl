@@ -39,7 +39,7 @@ if ($ARGV[0] eq "-h" or $ARGV[0] eq "--help") {
 
 $source_dir = $ARGV[0];
 
-if (not -e $source_dir and not -d $source_dir) {
+if (not -d $source_dir) {
     print "Param is not a dir, see --help or -h\n";
     exit 0;
 }
