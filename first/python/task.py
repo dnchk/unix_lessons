@@ -19,7 +19,7 @@ def moveFile(curr, dest):
 
 usage = "Usage: task.py SOURCE_DIR"
 
-if len(sys.argv) == 1:
+if len(sys.argv) != 2:
     print(usage)
     exit(-1)
 
