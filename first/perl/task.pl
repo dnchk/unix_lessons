@@ -27,7 +27,7 @@ sub moveFile {
 
 $usage = "Usage: task.pl SOURCE_DIR\n";
 
-if ($#ARGV + 1 != 1) {
+if ($#ARGV != 0) {
     print $usage;
     exit 0;
 }
