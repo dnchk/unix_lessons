@@ -37,8 +37,7 @@ namespace dotnet
 	    var orderedWords = words.GroupBy(x => x).Select(x => new {
 		    KeyField = x.Key,
 		    Count = x.Count() })
-		.OrderByDescending(x => x.Count)
-		.Take(100);
+		.OrderByDescending(x => x.Count).Take(100);
 
 	    foreach (var i in orderedWords)
 	    {
