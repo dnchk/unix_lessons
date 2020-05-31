@@ -33,10 +33,5 @@ input = get_cmd_arg()
 html = read_html(input)
 text = get_text_from_html(html)
 
-word_list = []
-words = text.split()
-for word in words:
-    word_list.append(word)
-
-top_words = Counter(word_list).most_common(100)
+top_words = Counter(text.split()).most_common(100)
 print(top_words)
