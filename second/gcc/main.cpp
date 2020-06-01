@@ -5,7 +5,6 @@
 #include <iterator>
 #include <streambuf>
 #include <algorithm>
-#include <unordered_map>
 #include <map>
 #include <utility>
 #include <experimental/filesystem>
