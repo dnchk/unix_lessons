@@ -33,7 +33,9 @@ namespace dotnet
 	    string html = System.IO.File.ReadAllText(input);
 	    string raw_text = Regex.Replace(html, "<.*?>", String.Empty);
 	    string text = Regex.Replace(raw_text, @"\t|\n|\r", String.Empty);
-	    string[] words = text.Split(' ');
+	    string clean_text =
+		new string(text.Where(c => !char.IsPunctuation(c)).ToArray());
+	    string[] words = clean_text.Split(' ');
 
 	    var orderedWords = words.GroupBy(x => x).Select(x => new {
 		    KeyField = x.Key,
