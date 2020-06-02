@@ -23,7 +23,7 @@ for file in ${files[@]}; do
     touch $file
 done
 
-eval ./$executable 'dir'
+eval "perl $executable dir"
 
 for file in ${files[@]}; do
     extension=${file#*.}

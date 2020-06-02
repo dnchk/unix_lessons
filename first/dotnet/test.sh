@@ -2,11 +2,6 @@
 
 curr_dir=$(pwd)
 
-if [ $# -ne 1 ]; then
-    echo "Usage: test.sh EXECUTABLE"
-    exit 1
-fi
-
 if [ "$1" == "--clean" ] && [ -d "${curr_dir}/dir" ]; then
     rm -r "${curr_dir}/dir"
     exit 0
@@ -23,7 +18,7 @@ for file in ${files[@]}; do
     touch $file
 done
 
-eval ./$executable 'dir'
+eval "dotnet run -- dir"
 
 for file in ${files[@]}; do
     extension=${file#*.}
