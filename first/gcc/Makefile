@@ -1,16 +1,13 @@
 CC = gcc
 LD = gcc
-OBJS = main.o test.o
-TARGET = task test
+OBJS = main.o
+TARGET = task
 CFLAGS = -Wall -Werror
 
 all: $(TARGET)
 
 task: main.c
 	$(LD) -o task main.c $(CFLAGS)
-
-test: test.c
-	$(LD) -o test test.c $(CFLAGS)
 
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
