@@ -4,20 +4,12 @@ use Cwd;
 use File::Copy;
 use File::Basename;
 
-sub getCurrentDir {
-    return Cwd::cwd();
-}
-
 sub createDir {
     if (not -e $_[0] and not -d $_[0]) {
 	unless(mkdir $_[0]) {
 	    print "Unable to create $_[0]\n";
 	    return;
 	}
-	print "$_[0] created\n";
-    }
-    else {
-	print "$_[0] already exists\n";
     }
 }
 
@@ -44,15 +36,13 @@ if (not -d $source_dir) {
     exit 0;
 }
 
-$curr_path = getCurrentDir();
-
 opendir (DIR, $source_dir) || print "Cannot open dir: $!";
 while(($file = readdir(DIR))) {
     my ($extension) = $file =~ /(\.[^.]+)$/;
     if ($extension ne "") {
-	$old_path = $curr_path . "/" . $source_dir . "/" . $file;
+	$old_path = $source_dir . "/" . $file;
 	$new_dir = $source_dir . "/" . substr($extension, 1);
-	$new_path = $curr_path . "/" . $new_dir . "/" . $file;
+	$new_path = $new_dir . "/" . $file;
 
 	createDir($new_dir);
 	moveFile($old_path, $new_path);
