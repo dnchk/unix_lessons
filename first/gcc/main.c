@@ -47,9 +47,8 @@ int main(int argc, char** argv)
     DIR* dir_stream;
     struct dirent* dir;
     struct stat st;
-    const char* ext;
-    char filename[PATH_MAX], new_filename[PATH_MAX], work_dir[PATH_MAX],
-	new_dir[PATH_MAX], curr_dir[PATH_MAX];
+    const char *ext, *work_dir = argv[1];
+    char filename[PATH_MAX], new_filename[PATH_MAX], new_dir[PATH_MAX];
 
     if (argc == 2)
     {
@@ -59,18 +58,6 @@ int main(int argc, char** argv)
 
 	    return 0;
 	}
-    }
-
-    if (getcwd(curr_dir, sizeof(curr_dir)) == NULL)
-    {
-	fprintf(stderr, "Failed to get current working directory\n");
-	goto Exit;
-    }
-
-    if (sprintf(work_dir, "%s/%s", curr_dir, argv[1]) < 0)
-    {
-	fprintf(stderr, "Failed to formate working dir\n");
-	goto Exit;
     }
 
     if (!(dir_stream = opendir(work_dir)))
