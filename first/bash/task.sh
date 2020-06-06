@@ -1,14 +1,17 @@
 #!/bin/bash
 
-usage="Usage: task.sh SOURCE_DIR"
+print_help() {
+    echo "Usage: task.sh SOURCE_DIR"
+    echo "Sort all the files in a SOURCE_DIR into subdirectories named by file extension"
+}
 
 if [ $# -ne 1 ]; then
-    echo $usage
+    print_help
     exit 1
 fi
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-    echo $usage
+    print_help
     exit 0
 fi
 
