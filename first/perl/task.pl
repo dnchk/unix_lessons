@@ -17,15 +17,18 @@ sub moveFile {
     move($_[0], $_[1]);
 }
 
-$usage = "Usage: task.pl SOURCE_DIR\n";
+sub print_help {
+    print "Usage: task.pl SOURCE_DIR\n";
+    print "Sort all the files in a SOURCE_DIR into subdirectories named by file extension\n";
+}
 
 if ($#ARGV != 0) {
-    print $usage;
+    print_help();
     exit 0;
 }
 
 if ($ARGV[0] eq "-h" or $ARGV[0] eq "--help") {
-    print $usage;
+    print_help();
     exit 1;
 }
 
