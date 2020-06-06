@@ -5,19 +5,23 @@ namespace dotnet
 {
     class Program
     {
-	static string usage = "Usage: dotnet run -- SOURCE_DIR";
+	static void PrintHelp()
+	{
+	    Console.WriteLine("Usage: dotnet run -- SOURCE_DIR");
+	    Console.WriteLine("Sort all the files in a SOURCE_DIR into subdirectories named by file extension");
+	}
 
         static void Main(string[] args)
         {
 	    if (args.Length != 1)
 	    {
-		Console.WriteLine(usage);
+		PrintHelp();
 		Environment.Exit(-1);
 	    }
 
 	    if (args[0] == "-h" || args[0] == "--help")
 	    {
-		Console.WriteLine(usage);
+		PrintHelp();
 		Environment.Exit(0);
 	    }
 
@@ -37,14 +41,9 @@ namespace dotnet
 		string new_dir = Path.Combine(source_path, extension.Substring(1));
 		string new_path = Path.Combine(new_dir, Path.GetFileName(file));
 
-		if (Directory.Exists(new_dir))
-		{
-		    Console.WriteLine("{0} already exists", new_dir);
-		}
-		else
+		if (!Directory.Exists(new_dir))
 		{
 		    Directory.CreateDirectory(new_dir);
-		    Console.WriteLine("{0} created", new_dir);
 		}
 
 		File.Move(file, new_path);
