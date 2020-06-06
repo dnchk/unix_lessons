@@ -1,7 +1,5 @@
 #!/bin/bash
 
-curr_dir=$(pwd)
-
 if [ $# -ne 1 ]; then
     echo "Usage: test.sh EXECUTABLE"
     exit 1
