@@ -89,11 +89,16 @@ int main(int argc, char* argv[])
 	    return a.second > b.second;
 	});
 
+    std::ofstream out_file;
+    out_file.open("out");
+
     for (int i = 0; i < 100; ++i)
     {
-	std::cout << std::get<0>(v_words[i]) << " " << std::get<1>(v_words[i])
+	out_file << std::get<1>(v_words[i]) << " " << std::get<0>(v_words[i])
 	    << "\n";
     }
+
+    out_file.close();
 
     return 0;
 }

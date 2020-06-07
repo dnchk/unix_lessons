@@ -55,6 +55,11 @@ foreach $word(@words) {
 
 @listing = (sort {$count{$b} <=> $count{$a}} keys %count)[0..100];
 
+$file = 'out';
+open($fh, '>', $file) or die "Failed to open a file";
+
 for $word(@listing) {
-    print "$word $count{$word}\n";
+    print $fh "$count{$word} $word\n";
 }
+
+close $fh;

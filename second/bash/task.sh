@@ -25,4 +25,5 @@ html=$(<$input)
 text=$(sed 's/<[^>]*>//g' <<< "$html")
 clean_text=$(sed -e 's/\([[:punct:]]\)//g' <<< "$text")
 
-echo $clean_text | tr '[:space:]' '[\n*]' | grep -v "^\s*$" | sort | uniq -c | sort -bnr | head -n 100
+touch out
+echo $clean_text | tr '[:space:]' '[\n*]' | grep -v "^\s*$" | sort | uniq -c | sort -bnr | head -n 100 > out
