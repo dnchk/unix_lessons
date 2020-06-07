@@ -28,19 +28,23 @@ void trim_html(std::string& html)
     }
 }
 
+void print_help()
+{
+    std::cout << "Usage: task INPUT_DATA\n";
+    std::cout << "Analyze the text from INPUT_DATA and select the 100 most common words\n";
+}
+
 int main(int argc, char* argv[])
 {
-    const std::string usage = "Usage: task INPUT\n";
-
     if (argc != 2)
     {
-	std::cout << usage;
+	print_help();
 	return 1;
     }
 
     if (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0)
     {
-	std::cout << usage;
+	print_help();
 	return 0;
     }
 
