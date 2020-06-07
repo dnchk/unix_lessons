@@ -4,15 +4,17 @@ import codecs
 import os.path
 from collections import Counter
 
-def get_cmd_arg():
-    usage = "Usage: task.py INPUT_DATA"
+def print_help():
+    print("Usage: task.py INPUT_DATA")
+    print("Analyze the text from INPUT_DATA and select the 100 most common words")
 
+def get_cmd_arg():
     if len(sys.argv) != 2:
-        print(usage)
+        print_help()
         exit(-1)
 
     if sys.argv[1] == "-h" or sys.argv[1] == "--help":
-        print(usage)
+        print_help()
         exit(0)
 
     if not os.path.exists(sys.argv[1]):
