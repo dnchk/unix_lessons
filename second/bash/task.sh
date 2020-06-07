@@ -1,14 +1,17 @@
 #!/bin/bash
 
-usage="Usage: task.sh INPUT_DATA"
+print_help() {
+    echo "Usage: task.sh INPUT_DATA"
+    echo "Analyze the text from INPUT_DATA and select the 100 most common words"
+}
 
 if [ $# -ne 1 ]; then
-    echo $usage
+    print_help
     exit 1
 fi
 
 if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
-    echo $usage
+    print_help
     exit 0
 fi
 
