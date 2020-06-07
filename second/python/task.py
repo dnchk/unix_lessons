@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import re
 import sys
 import codecs
@@ -35,5 +37,12 @@ input = get_cmd_arg()
 html = read_html(input)
 text = get_text_from_html(html)
 
-top_words = Counter(text.split()).most_common(100)
-print(top_words)
+top_words = Counter(text.split())
+
+file = open("out", "w")
+
+for key, value in top_words.most_common(100):
+    line = "%d %s\n" % (value, key)
+    file.write(line)
+
+file.close()
