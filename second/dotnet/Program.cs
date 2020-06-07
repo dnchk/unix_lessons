@@ -7,19 +7,23 @@ namespace dotnet
 {
     class Program
     {
-	static string usage = "Usage: dotnet run -- INPUT_DATA";
+	static void PrintHelp()
+	{
+	    Console.WriteLine("Usage: dotnet run -- INPUT_DATA");
+	    Console.WriteLine("Analyze the text from INPUT_DATA and select the 100 most common words");
+	}
 
         static void Main(string[] args)
         {
 	    if (args.Length != 1)
 	    {
-		Console.WriteLine(usage);
+		PrintHelp();
 		Environment.Exit(-1);
 	    }
 
 	    if (args[0] == "-h" || args[0] == "--help")
 	    {
-		Console.WriteLine(usage);
+		PrintHelp();
 		Environment.Exit(0);
 	    }
 
