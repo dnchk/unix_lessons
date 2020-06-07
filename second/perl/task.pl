@@ -2,16 +2,19 @@
 
 use HTML::Strip;
 
-sub get_cmd_arg {
-    $usage = "Usage: task.pl INPUT_DATA\n";
+sub print_help {
+    print "Usage: task.pl INPUT_DATA\n";
+    print "Analyze the text from INPUT_DATA and select the 100 most common words\n";
+}
 
+sub get_cmd_arg {
     if ($#ARGV != 0) {
-        print $usage;
+	print_help();
         exit 0;
     }
 
     if ($ARGV[0] eq "-h" or $ARGV[0] eq "--help") {
-        print $usage;
+	print_help();
         exit 1;
     }
 
