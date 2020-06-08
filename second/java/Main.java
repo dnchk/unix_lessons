@@ -40,7 +40,6 @@ public class Main {
 	}
 
 	content = content.replaceAll("\\<.*?\\>", "");
-	//content = content.replaceAll("[^a-zA-Z ]", "");
 
 	String[] splitted = content.split("\\s+");
 	Arrays.sort(splitted);
