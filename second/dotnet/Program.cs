@@ -36,10 +36,10 @@ namespace dotnet
 
 	    string html = System.IO.File.ReadAllText(input);
 	    string raw_text = Regex.Replace(html, "<.*?>", String.Empty);
-	    string text = Regex.Replace(raw_text, @"\t|\n|\r", String.Empty);
-	    string clean_text =
-		new string(text.Where(c => !char.IsPunctuation(c)).ToArray());
-	    string[] words = clean_text.Split(' ');
+	    string text = Regex.Replace(raw_text, @"\n|\r", String.Empty);
+	    var punctuation = text.Where(Char.IsPunctuation).Distinct().ToArray();
+	    var words = text.Split().Select(x => x.Trim(punctuation));
+	    words = words.Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
 	    var orderedWords = words.GroupBy(x => x).Select(x => new {
 		    KeyField = x.Key,
@@ -48,7 +48,13 @@ namespace dotnet
 
 	    foreach (var i in orderedWords)
 	    {
-		Console.WriteLine(i);
+		string line = String.Format("{0} {1}", i.Count, i.KeyField);
+
+		using (System.IO.StreamWriter file =
+		    new System.IO.StreamWriter(@"./out", true))
+		{
+		    file.WriteLine(line);
+		}
 	    }
         }
     }
