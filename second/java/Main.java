@@ -17,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) {
 	if (args.length != 1) {
-	    print_help();
+	    System.err.println("Usage: java Main INPUT_DATA, see -h or --help");
 	    System.exit(1);
 	}
 
@@ -28,7 +28,7 @@ public class Main {
 
 	File input = new File(args[0]);
 	if (!input.exists()) {
-	    System.out.println("File passed as param doesn't exist");
+	    System.err.println("File passed as param doesn't exist");
 	    System.exit(1);
 	}
 
@@ -36,7 +36,7 @@ public class Main {
 	try {
 	    content = new Scanner(input).useDelimiter("\\Z").next();
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    throw new RuntimeException("Failed to read file", e);
 	}
 
 	content = content.replaceAll("\\<.*?\\>", "");
@@ -52,12 +52,13 @@ public class Main {
 	    }
 	}
 
-	Map<String, Long> map = list.stream().
-	    collect(Collectors.groupingBy(w -> w, Collectors.counting()));
-
-	List<Map.Entry<String, Long>> result = map.entrySet().stream().
-	    sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).
-	    limit(100).collect(Collectors.toList());
+	List<Map.Entry<String, Long>> result = list.stream()
+	    .collect(Collectors.groupingBy(w -> w, Collectors.counting()))
+	    .entrySet()
+	    .stream()
+	    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+	    .limit(100)
+	    .collect(Collectors.toList());
 
 	try {
 	    FileWriter file_writer = new FileWriter("out");
@@ -69,7 +70,7 @@ public class Main {
 
 	    file_writer.close();
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    throw new RuntimeException("Failed to write result", e);
 	}
     }
 }
