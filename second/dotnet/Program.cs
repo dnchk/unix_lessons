@@ -17,7 +17,7 @@ namespace dotnet
         {
 	    if (args.Length != 1)
 	    {
-		PrintHelp();
+		Console.Error.WriteLine("Usage: dotnet run -- INPUT_DATA, see -h");
 		Environment.Exit(-1);
 	    }
 
@@ -30,7 +30,7 @@ namespace dotnet
 	    string input = args[0];
 	    if (!File.Exists(input))
 	    {
-		Console.WriteLine("Param is not a file, see -h or --help");
+		Console.Error.WriteLine("Param is not a file, see -h or --help");
 		Environment.Exit(-1);
 	    }
 
