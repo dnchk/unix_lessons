@@ -9,12 +9,13 @@
 #include <utility>
 #include <experimental/filesystem>
 
+using namespace std;
 namespace fs = std::experimental::filesystem;
 
-void trim_html(std::string& html)
+void trim_html(string& html)
 {
     size_t a = 0, b = 0;
-    for (a = b; a < html.length(); a++)
+    for (; a < html.length(); a++)
     {
 	if (html[a] == '<')
 	for (b = a; b < html.length(); b++)
@@ -30,15 +31,15 @@ void trim_html(std::string& html)
 
 void print_help()
 {
-    std::cout << "Usage: task INPUT_DATA\n";
-    std::cout << "Analyze the text from INPUT_DATA and select the 100 most common words\n";
+    cout << "Usage: task INPUT_DATA\n";
+    cout << "Analyze the text from INPUT_DATA and select the 100 most common words\n";
 }
 
 int main(int argc, char* argv[])
 {
     if (argc != 2)
     {
-	print_help();
+	cerr << "Usage: task INPUT_DATA, see -h or --help\n";
 	return 1;
     }
 
@@ -48,53 +49,52 @@ int main(int argc, char* argv[])
 	return 0;
     }
 
-    std::string input = argv[1];
+    string input = argv[1];
 
     if (!fs::exists(input))
     {
-	std::cout << "Param is not a file, see -h or --help\n";
+	cerr << "Param is not a file, see -h or --help\n";
 	return 1;
     }
 
-    std::ifstream file(input);
-    std::string text((std::istreambuf_iterator<char>(file)),
-	std::istreambuf_iterator<char>());
+    ifstream file(input);
+    string text((istreambuf_iterator<char>(file)),
+	istreambuf_iterator<char>());
     trim_html(text);
 
-    std::string clean_text;
-    std::remove_copy_if(text.begin(), text.end(),
-	std::back_inserter(clean_text), std::ptr_fun<int, int>(&std::ispunct));
+    string clean_text;
+    remove_copy_if(text.begin(), text.end(),
+	back_inserter(clean_text), ptr_fun<int, int>(&ispunct));
     clean_text.erase(remove(clean_text.begin(), clean_text.end(), '\"'),
 	clean_text.end());
 
-    std::istringstream iss(clean_text);
-    std::vector<std::string> words{std::istream_iterator<std::string>{iss},
-	std::istream_iterator<std::string>{}};
+    istringstream iss(clean_text);
+    vector<string> words{istream_iterator<string>{iss},
+	istream_iterator<string>{}};
 
-/* TODO optimize */
-    std::map<std::string, int> frequency;
+    map<string, int> frequency;
     for (auto w : words)
     {
 	frequency[w]++;
     }
 
-    std::vector<std::pair<std::string, int>> v_words = {};
+    vector<pair<string, int>> v_words = {};
     for (auto it = frequency.begin(); it != frequency.end(); ++it)
     {
 	v_words.push_back(*it);
     }
 
-    std::sort(v_words.begin(), v_words.end(),
-	[=](std::pair<std::string, int>& a, std::pair<std::string, int>& b) {
+    sort(v_words.begin(), v_words.end(),
+	[=](pair<string, int>& a, pair<string, int>& b) {
 	    return a.second > b.second;
 	});
 
-    std::ofstream out_file;
+    ofstream out_file;
     out_file.open("out");
 
     for (int i = 0; i < 100; ++i)
     {
-	out_file << std::get<1>(v_words[i]) << " " << std::get<0>(v_words[i])
+	out_file << get<1>(v_words[i]) << " " << get<0>(v_words[i])
 	    << "\n";
     }
 
