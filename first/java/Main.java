@@ -32,17 +32,17 @@ public class Main {
 	    if (!file.isDirectory()) {
 		int i = file.getName().lastIndexOf('.');
 
-		File new_dir = new File(source_dir + "/" +
-		    file.getName().substring(i + 1));
-
 		if (i > 0) {
+		    File new_dir = new File(source_dir + "/" +
+			file.getName().substring(i + 1));
+
 		    if (!new_dir.exists()) {
 			new_dir.mkdir();
 		    }
-		}
 
-		File new_path = new File(new_dir + "/" + file.getName());
-		file.renameTo(new_path);
+		    File new_path = new File(new_dir + "/" + file.getName());
+		    file.renameTo(new_path);
+		}
 	    }
 	}
     }
