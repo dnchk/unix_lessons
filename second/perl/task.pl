@@ -3,8 +3,8 @@
 use HTML::Strip;
 
 sub print_help {
-    say STDOUT "Usage: task.pl INPUT_DATA\n";
-    say STDOUT "Analyze the text from INPUT_DATA and select the 100 most common words\n";
+    say STDOUT "Usage: task.pl INPUT_DATA";
+    say STDOUT "Analyze the text from INPUT_DATA and select the 100 most common words";
 }
 
 sub get_cmd_arg {
@@ -19,7 +19,7 @@ sub get_cmd_arg {
     }
 
     if (not -e $ARGV[0]) {
-        say STDERR "Param does not exist, see -h or --help\n";
+        say STDERR "Param does not exist, see -h or --help";
         exit 1;
     }
 
