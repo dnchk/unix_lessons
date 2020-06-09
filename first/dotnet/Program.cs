@@ -15,7 +15,7 @@ namespace dotnet
         {
 	    if (args.Length != 1)
 	    {
-		PrintHelp();
+		Console.Error.WriteLine("Usage: dotnet run -- SOURCE_DIR, see -h");
 		Environment.Exit(-1);
 	    }
 
@@ -28,7 +28,7 @@ namespace dotnet
 	    string source_dir = args[0];
 	    if (!Directory.Exists(source_dir))
 	    {
-		Console.WriteLine("There's no such directory as provided param");
+		Console.Error.WriteLine("There's no such directory as provided param");
 		Environment.Exit(-1);
 	    }
 
