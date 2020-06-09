@@ -3,24 +3,24 @@
 use HTML::Strip;
 
 sub print_help {
-    print "Usage: task.pl INPUT_DATA\n";
-    print "Analyze the text from INPUT_DATA and select the 100 most common words\n";
+    say STDOUT "Usage: task.pl INPUT_DATA\n";
+    say STDOUT "Analyze the text from INPUT_DATA and select the 100 most common words\n";
 }
 
 sub get_cmd_arg {
     if ($#ARGV != 0) {
 	print_help();
-        exit 0;
+        exit 1;
     }
 
     if ($ARGV[0] eq "-h" or $ARGV[0] eq "--help") {
 	print_help();
-        exit 1;
+        exit 0;
     }
 
     if (not -e $ARGV[0]) {
-        print "Param does not exist, see -h or --help\n";
-        exit 0;
+        say STDERR "Param does not exist, see -h or --help\n";
+        exit 1;
     }
 
     return $ARGV[0];
