@@ -17,7 +17,7 @@ static const char* extract_ext(const char* file)
 {
     const char* extension = strrchr(file, DELIM);
 
-    if (extension == NULL || extension == file)
+    if (extension == NULL)
     {
 	return NULL;
     }
@@ -27,18 +27,8 @@ static const char* extract_ext(const char* file)
 
 static void help_print(void)
 {
-    FILE *file;
-    int c;
-
-    if ((file = fopen("help", "r")))
-    {
-	while ((c = getc(file)) != EOF)
-	{
-	    putchar(c);
-	}
-
-	fclose(file);
-    }
+    printf("Usage: task [SOURCE_DIR]\n");
+    printf("Sort all files in SOURCE_DIR to subdirs with name corresponding to extension of the appropriate file.\n");
 }
 
 int main(int argc, char** argv)

@@ -1,3 +1,0 @@
-Usage: task [SOURCE_DIR]
-Sort all files in SOURCE_DIR to subdirs with name corresponding to extension of the
-appropriate file.
