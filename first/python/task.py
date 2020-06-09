@@ -15,7 +15,7 @@ def print_help():
     print("Sort all the files in a SOURCE_DIR into subdirectories named by file extension")
 
 if len(sys.argv) != 2:
-    print_help()
+    print("Usage: task.py SOURCE_DIR, see --help or -h", file=sys.stderr)
     exit(-1)
 
 if sys.argv[1] == "-h" or sys.argv[1] == "--help":
@@ -25,7 +25,7 @@ if sys.argv[1] == "-h" or sys.argv[1] == "--help":
 source_dir = sys.argv[1]
 
 if not os.path.isdir(source_dir):
-    print("Param is not a dir, see --help or -h")
+    print("Param is not a dir, see --help or -h", file=sys.stderr)
     exit(-1)
 
 for file in os.listdir(source_dir):
