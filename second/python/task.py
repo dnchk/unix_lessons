@@ -12,7 +12,7 @@ def print_help():
 
 def get_cmd_arg():
     if len(sys.argv) != 2:
-        print_help()
+        print("Usage: task.py INPUT_DATA, see -h or --help", file=sys.stderr)
         exit(-1)
 
     if sys.argv[1] == "-h" or sys.argv[1] == "--help":
@@ -20,7 +20,7 @@ def get_cmd_arg():
         exit(0)
 
     if not os.path.exists(sys.argv[1]):
-        print("Param is not a file, see -h or --help")
+        print("Param is not a file, see -h or --help", file=sys.stderr)
         exit(-1)
 
     return sys.argv[1]
