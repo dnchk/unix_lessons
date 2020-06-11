@@ -28,13 +28,13 @@ static const char* extract_ext(const char* file)
 static void help_print(void)
 {
     printf("Usage: task [SOURCE_DIR]\n");
-    printf("Sort all files in SOURCE_DIR to subdirs with name corresponding to extension of the appropriate file.\n");
+    printf("Group all files in a SOURCE_DIR into subdirs by file extension\n");
 }
 
 #define CHECK_SPRINTF(expr) if ((expr) < 0) { \
-			fprintf(stderr, "Failed sprintf conversion\n"); \
-			goto Exit; \
-		    }
+				fprintf(stderr, "Failed sprintf conversion\n"); \
+				goto Exit; \
+			    }
 
 int main(int argc, char** argv)
 {
