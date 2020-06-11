@@ -31,6 +31,11 @@ static void help_print(void)
     printf("Sort all files in SOURCE_DIR to subdirs with name corresponding to extension of the appropriate file.\n");
 }
 
+#define CHECK_SPRINTF(expr) if ((expr) < 0) { \
+			fprintf(stderr, "Failed sprintf conversion\n"); \
+			goto Exit; \
+		    }
+
 int main(int argc, char** argv)
 {
     int ret_val = -1;
@@ -58,33 +63,21 @@ int main(int argc, char** argv)
 
     while ((dir = readdir(dir_stream)))
     {
-	if (sprintf(filename, "%s/%s", work_dir, dir->d_name) < 0)
-	{
-	    fprintf(stderr, "Failed to create filename\n");
-	    goto Exit;
-	}
+	CHECK_SPRINTF(sprintf(filename, "%s/%s", work_dir, dir->d_name));
 
 	if (!is_regular_file(filename) || !(ext = extract_ext(dir->d_name)))
 	{
 	    continue;
 	}
 
-	if (sprintf(new_dir, "%s/%s", work_dir, ext) < 0)
-	{
-	    fprintf(stderr, "Failed to create move dir\n");
-	    goto Exit;
-	}
+	CHECK_SPRINTF(sprintf(new_dir, "%s/%s", work_dir, ext));
 
 	if (stat(new_dir, &st) == -1)
 	{
 	    mkdir(new_dir, 0700);
 	}
 
-	if (sprintf(new_filename, "%s/%s", new_dir, dir->d_name) < 0)
-	{
-	    fprintf(stderr, "Failed to create move dir\n");
-	    goto Exit;
-	}
+	CHECK_SPRINTF(sprintf(new_filename, "%s/%s", new_dir, dir->d_name));
 
 	if (rename(filename, new_filename) != 0)
 	{
