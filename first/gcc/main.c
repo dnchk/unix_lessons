@@ -64,12 +64,7 @@ int main(int argc, char** argv)
 	    goto Exit;
 	}
 
-	if (!is_regular_file(filename))
-	{
-	    continue;
-	}
-
-	if (!(ext = extract_ext(dir->d_name)))
+	if (!is_regular_file(filename) || !(ext = extract_ext(dir->d_name)))
 	{
 	    continue;
 	}
