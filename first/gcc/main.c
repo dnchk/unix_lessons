@@ -55,7 +55,7 @@ int main(int argc, char** argv)
 	}
     }
 
-    if (!(dir_stream = opendir(work_dir)))
+    if ((dir_stream = opendir(work_dir)) == NULL)
     {
 	fprintf(stderr, "Failed to open directory stream\n");
 	goto Exit;
