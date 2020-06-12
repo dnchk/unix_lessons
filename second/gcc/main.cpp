@@ -8,7 +8,7 @@
 using namespace std;
 namespace fs = std::experimental::filesystem;
 
-void print_help()
+void print_help(void)
 {
     cout << "Usage: task INPUT_DATA\n";
     cout << "Analyze the text from INPUT_DATA and select the 100 most common words\n";
@@ -17,10 +17,10 @@ void print_help()
 void trim_html(string& html)
 {
     size_t a = 0, b = 0;
-    for (; a < html.length(); a++)
+    for (; a < html.length(); ++a)
     {
 	if (html[a] == '<')
-	for (b = a; b < html.length(); b++)
+	for (b = a; b < html.length(); ++b)
 	{
 	    if (html[b] == '>')
 	    {
@@ -57,13 +57,10 @@ int main(int argc, char* argv[])
     string text(istreambuf_iterator<char>{file}, istreambuf_iterator<char>{});
     trim_html(text);
 
-    string clean_text;
-    remove_copy_if(text.begin(), text.end(), back_inserter(clean_text),
-	ptr_fun<int, int>(&ispunct));
-    clean_text.erase(remove(clean_text.begin(), clean_text.end(), '\"'),
-	clean_text.end());
+    text.erase(remove_if(text.begin(), text.end(),
+	[](const char c) { return ispunct(c); }), text.end());
 
-    istringstream iss(clean_text);
+    istringstream iss(text);
     vector<string> words(istream_iterator<string>{iss},
 	istream_iterator<string>{});
 
@@ -91,7 +88,7 @@ int main(int argc, char* argv[])
     }
 
     sort(words_freq.begin(), words_freq.end(),
-	[=](pair<string, int>& a, pair<string, int>& b) {
+	[](pair<string, int>& a, pair<string, int>& b) {
 	    return a.second > b.second;
 	});
 
