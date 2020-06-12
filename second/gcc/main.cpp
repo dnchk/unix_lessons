@@ -68,11 +68,12 @@ int main(int argc, char* argv[])
 	istream_iterator<string>{});
 
     vector<pair<string, int>> words_freq;
+    vector<pair<string, int>>::iterator it;
     int index;
 
     for (size_t i = 0; i < words.size(); ++i)
     {
-	auto it = find_if(words_freq.begin(), words_freq.end(),
+	it = find_if(words_freq.begin(), words_freq.end(),
 	    [&words, &i](const pair<string, int>& el)
 	    {
 		return el.first == words.at(i);
