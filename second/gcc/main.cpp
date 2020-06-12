@@ -1,16 +1,18 @@
+#include <experimental/filesystem>
+#include <algorithm>
+#include <iterator>
+#include <iostream>
 #include <cstring>
 #include <fstream>
-#include <sstream>
-#include <iostream>
-#include <iterator>
-#include <streambuf>
-#include <algorithm>
-#include <map>
-#include <utility>
-#include <experimental/filesystem>
 
 using namespace std;
 namespace fs = std::experimental::filesystem;
+
+void print_help()
+{
+    cout << "Usage: task INPUT_DATA\n";
+    cout << "Analyze the text from INPUT_DATA and select the 100 most common words\n";
+}
 
 void trim_html(string& html)
 {
@@ -27,12 +29,6 @@ void trim_html(string& html)
 	    }
 	}
     }
-}
-
-void print_help()
-{
-    cout << "Usage: task INPUT_DATA\n";
-    cout << "Analyze the text from INPUT_DATA and select the 100 most common words\n";
 }
 
 int main(int argc, char* argv[])
@@ -58,33 +54,42 @@ int main(int argc, char* argv[])
     }
 
     ifstream file(input);
-    string text((istreambuf_iterator<char>(file)),
-	istreambuf_iterator<char>());
+    string text(istreambuf_iterator<char>{file}, istreambuf_iterator<char>{});
     trim_html(text);
 
     string clean_text;
-    remove_copy_if(text.begin(), text.end(),
-	back_inserter(clean_text), ptr_fun<int, int>(&ispunct));
+    remove_copy_if(text.begin(), text.end(), back_inserter(clean_text),
+	ptr_fun<int, int>(&ispunct));
     clean_text.erase(remove(clean_text.begin(), clean_text.end(), '\"'),
 	clean_text.end());
 
     istringstream iss(clean_text);
-    vector<string> words{istream_iterator<string>{iss},
-	istream_iterator<string>{}};
+    vector<string> words(istream_iterator<string>{iss},
+	istream_iterator<string>{});
 
-    map<string, int> frequency;
-    for (auto w : words)
+    vector<pair<string, int>> words_freq;
+    int index;
+
+    for (size_t i = 0; i < words.size(); ++i)
     {
-	frequency[w]++;
+	auto it = find_if(words_freq.begin(), words_freq.end(),
+	    [&words, &i](const pair<string, int>& el)
+	    {
+		return el.first == words.at(i);
+	    });
+
+	if (it != words_freq.end())
+	{
+	    index = distance(words_freq.begin(), it);
+	    words_freq.at(index).second++;
+	}
+	else
+	{
+	    words_freq.push_back(make_pair(words.at(i), 1));
+	}
     }
 
-    vector<pair<string, int>> v_words = {};
-    for (auto it = frequency.begin(); it != frequency.end(); ++it)
-    {
-	v_words.push_back(*it);
-    }
-
-    sort(v_words.begin(), v_words.end(),
+    sort(words_freq.begin(), words_freq.end(),
 	[=](pair<string, int>& a, pair<string, int>& b) {
 	    return a.second > b.second;
 	});
@@ -92,9 +97,9 @@ int main(int argc, char* argv[])
     ofstream out_file;
     out_file.open("out");
 
-    for (int i = 0; i < 100; ++i)
+    for (size_t i = 0; i < 100; ++i)
     {
-	out_file << get<1>(v_words[i]) << " " << get<0>(v_words[i])
+	out_file << words_freq.at(i).second << " " << words_freq.at(i).first
 	    << "\n";
     }
 
