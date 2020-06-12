@@ -6,8 +6,8 @@ CFLAGS = -Wall -Werror
 
 all: $(TARGET)
 
-task: main.cpp
-	$(LD) --std=c++17 -o task main.cpp -lstdc++fs $(CFLAGS)
+$(TARGET): $(OBJS)
+	$(LD) -o $@ $^ --std=c++17 -lstdc++fs $(CFLAGS)
 
 %.o: %.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
